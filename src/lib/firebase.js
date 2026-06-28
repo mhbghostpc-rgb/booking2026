@@ -12,6 +12,7 @@ const firebaseConfig = {
   measurementId: "G-0RQ8LBKWB2"
 };
 
+
 // Initialize Firebase only if it hasn't been initialized already
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
