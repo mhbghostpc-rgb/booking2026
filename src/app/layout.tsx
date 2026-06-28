@@ -17,6 +17,9 @@ const tajawal = Tajawal({
 export const metadata: Metadata = {
   title: "أكاديمية مستر محب موسى | لتعليم اللغة الإنجليزية",
   description: "أكاديمية مستر محب موسى هي منصة تعليمية متخصصة في تعليم اللغة الإنجليزية للطلاب بنظام حجز ومتابعة تفاعلي.",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
