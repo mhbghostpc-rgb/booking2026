@@ -6,6 +6,12 @@ export default function AudioPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.preload = 'auto';
+      }
+    }, 5000);
+
     const playAudio = () => {
       if (audioRef.current) {
         if (audioRef.current.paused) {
@@ -21,6 +27,7 @@ export default function AudioPlayer() {
     window.addEventListener('playMusic', playAudio);
 
     return () => {
+      clearTimeout(timer);
       window.removeEventListener('playMusic', playAudio);
       if (audioRef.current) {
         audioRef.current.pause();

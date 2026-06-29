@@ -1,7 +1,8 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { Swiper as SwiperType } from 'swiper';
 import Image from 'next/image';
 
 import 'swiper/css';
@@ -11,11 +12,18 @@ import 'swiper/css/pagination';
 export default function SwiperGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
+
   useEffect(() => {
+    if (!swiperInstance) return;
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           window.dispatchEvent(new CustomEvent('playMusic'));
+          swiperInstance.autoplay.start();
+        } else {
+          swiperInstance.autoplay.stop();
         }
       });
     }, { threshold: 0.1 });
@@ -29,7 +37,7 @@ export default function SwiperGallery() {
         observer.unobserve(containerRef.current);
       }
     };
-  }, []);
+  }, [swiperInstance]);
 
   const academyImages = Array.from({ length: 13 }, (_, i) => ({
     src: `/assets/academy/${i + 1}.jpeg`,
@@ -134,6 +142,8 @@ export default function SwiperGallery() {
             disableOnInteraction: false,
           }}
           speed={800}
+          onInit={(swiper) => swiper.autoplay.stop()}
+          onSwiper={setSwiperInstance}
           coverflowEffect={{
             rotate: 20,
             stretch: 0,
