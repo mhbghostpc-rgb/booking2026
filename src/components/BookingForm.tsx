@@ -120,7 +120,7 @@ export default function BookingForm() {
     const whatsappUrl = `https://wa.me/201200621226?text=${encodeURIComponent(whatsappText)}`;
 
     return (
-      <div className="w-full max-w-2xl mx-auto text-center" dir="rtl">
+      <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto text-center" dir="rtl">
         <div className="bg-gradient-to-b from-[#0a0f1c] to-[#04060a] border-t border-blue-900/40 border-x border-[#0a0f1c] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9),inset_0_1px_1px_rgba(59,130,246,0.2)] p-8 rounded-2xl relative overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-24 bg-green-500/20 rounded-full blur-3xl"></div>
           
@@ -185,7 +185,7 @@ export default function BookingForm() {
 
   return (
     <ScrollReveal delay={0.1}>
-      <div className="w-full max-w-2xl mx-auto" dir="rtl">
+      <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto" dir="rtl">
         <div className="bg-gradient-to-b from-[#0a0f1c] to-[#04060a] border-t border-blue-900/40 border-x border-[#0a0f1c] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9),inset_0_1px_1px_rgba(59,130,246,0.2)] p-6 md:p-12 relative overflow-hidden rounded-[2rem]">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-24 bg-blue-500/10 rounded-full blur-3xl"></div>
           <h2 className="text-3xl font-bold text-center text-white mb-8 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
