@@ -5,12 +5,34 @@ export default function AudioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  const isUnlockedRef = useRef(false);
+  const isPlayingRef = useRef(false);
+
+  useEffect(() => {
+    isPlayingRef.current = isPlaying;
+  }, [isPlaying]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if (audioRef.current) {
         audioRef.current.preload = 'auto';
       }
     }, 5000);
+
+    const unlockAudio = () => {
+      if (isUnlockedRef.current || !audioRef.current) return;
+      
+      audioRef.current.play().then(() => {
+        isUnlockedRef.current = true;
+        if (!isPlayingRef.current && audioRef.current) {
+          audioRef.current.pause();
+        }
+      }).catch(() => {});
+
+      ['touchstart', 'click', 'scroll'].forEach(e => document.removeEventListener(e, unlockAudio));
+    };
+
+    ['touchstart', 'click', 'scroll'].forEach(e => document.addEventListener(e, unlockAudio, { passive: true }));
 
     const playAudio = () => {
       if (audioRef.current) {
@@ -29,6 +51,7 @@ export default function AudioPlayer() {
     return () => {
       clearTimeout(timer);
       window.removeEventListener('playMusic', playAudio);
+      ['touchstart', 'click', 'scroll'].forEach(e => document.removeEventListener(e, unlockAudio));
       if (audioRef.current) {
         audioRef.current.pause();
       }
