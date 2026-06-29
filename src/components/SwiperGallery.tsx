@@ -158,6 +158,7 @@ export default function SwiperGallery() {
                   alt={item.caption}
                   fill
                   sizes="(max-width: 768px) 280px, 350px"
+                  quality={50}
                   className={`${isReview ? 'review-img object-contain bg-[#0a0a0a]' : 'object-cover'}`}
                 />
                 <div className="slide-caption font-tajawal text-sm md:text-base">
