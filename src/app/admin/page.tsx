@@ -21,6 +21,12 @@ export default function AdminPage() {
   const [isAddingStudent, setIsAddingStudent] = useState(false);
   const [newStudent, setNewStudent] = useState({ name: '', phone1: '', phone2: '', stage: '', grade: '', attendanceMode: 'حضوري', schoolName: '', finalGrade: '', address: '' });
 
+  const gradesOptions: Record<string, string[]> = {
+    'ابتدائي': ['الاول الابتدائي', 'الثاني الابتدائي', 'الثالث الابتدائي', 'الرابع الابتدائي', 'الخامس الابتدائي', 'السادس الابتدائي'],
+    'إعدادي': ['الاول الاعدادي', 'الثاني الاعدادي', 'الثالث الاعدادي'],
+    'ثانوي': ['الاول الثانوي', 'الثاني الثانوي', 'الثالث الثانوي']
+  };
+
   const router = useRouter();
 
   useEffect(() => {
@@ -59,17 +65,15 @@ export default function AdminPage() {
     }
     
     try {
-      // Admin bypasses standard constraints and adds to the system directly
-      await addDoc(collection(db, 'users'), {
+      await addDoc(collection(db, 'students'), {
         ...newStudent,
-        role: 'student',
-        createdAt: new Date(),
-        // Note: For actual auth, the user will still need to sign in with Google
-        // This just pre-registers their details. They will link when they login with the same phone/email.
+        timestamp: serverTimestamp(),
+        acknowledged: true,
+        adminMessage: ''
       });
       alert('تم إضافة الطالب بنجاح!');
       setIsAddingStudent(false);
-      setNewStudent({ name: '', phone1: '', phone2: '', stage: '', grade: '', address: '', schoolName: '', finalGrade: '', attendanceMode: 'حضوري' });
+      setNewStudent({ name: '', phone1: '', phone2: '', stage: '', grade: '', attendanceMode: 'حضوري', schoolName: '', finalGrade: '', address: '' });
     } catch (error) {
       console.error("Error adding student:", error);
       alert('حدث خطأ أثناء إضافة الطالب');
@@ -562,15 +566,19 @@ export default function AdminPage() {
                 </div>
                 <div>
                   <label className="block text-gray-400 text-sm mb-1">المرحلة</label>
-                  <select className="modern-input w-full p-2 [&>option]:bg-luxury-900 [&>option]:text-white" value={editingStudent.stage || ''} onChange={e => setEditingStudent({ ...editingStudent, stage: e.target.value })}>
-                    <option value="ابتدائي">ابتدائي</option>
-                    <option value="إعدادي">إعدادي</option>
-                    <option value="ثانوي">ثانوي</option>
+                  <select className="modern-input w-full p-2 [&>option]:bg-luxury-900 [&>option]:text-white" value={editingStudent.stage || ''} onChange={e => setEditingStudent({ ...editingStudent, stage: e.target.value, grade: '' })}>
+                    <option value="" disabled>اختر المرحلة</option>
+                    <option value="ابتدائي">المرحلة الابتدائية</option>
+                    <option value="إعدادي">المرحلة الإعدادية</option>
+                    <option value="ثانوي">المرحلة الثانوية</option>
                   </select>
                 </div>
                 <div>
                   <label className="block text-gray-400 text-sm mb-1">الصف</label>
-                  <input type="text" className="modern-input w-full p-2" value={editingStudent.grade || ''} onChange={e => setEditingStudent({ ...editingStudent, grade: e.target.value })} />
+                  <select className="modern-input w-full p-2 disabled:opacity-50 [&>option]:bg-luxury-900 [&>option]:text-white" disabled={!editingStudent.stage} value={editingStudent.grade || ''} onChange={e => setEditingStudent({ ...editingStudent, grade: e.target.value })}>
+                    <option value="" disabled>اختر المرحلة أولاً</option>
+                    {editingStudent.stage && gradesOptions[editingStudent.stage]?.map(g => <option key={g} value={g}>{g}</option>)}
+                  </select>
                 </div>
                 <div>
                   <label className="block text-gray-400 text-sm mb-1">نظام الحضور</label>
@@ -623,16 +631,19 @@ export default function AdminPage() {
                 </div>
                 <div>
                   <label className="block text-gray-400 text-sm mb-1">المرحلة</label>
-                  <select className="modern-input w-full p-2 [&>option]:bg-luxury-900 [&>option]:text-white" value={newStudent.stage} onChange={e => setNewStudent({ ...newStudent, stage: e.target.value })}>
-                    <option value="">اختر المرحلة</option>
-                    <option value="ابتدائي">ابتدائي</option>
-                    <option value="إعدادي">إعدادي</option>
-                    <option value="ثانوي">ثانوي</option>
+                  <select className="modern-input w-full p-2 [&>option]:bg-luxury-900 [&>option]:text-white" value={newStudent.stage} onChange={e => setNewStudent({ ...newStudent, stage: e.target.value, grade: '' })}>
+                    <option value="" disabled>اختر المرحلة</option>
+                    <option value="ابتدائي">المرحلة الابتدائية</option>
+                    <option value="إعدادي">المرحلة الإعدادية</option>
+                    <option value="ثانوي">المرحلة الثانوية</option>
                   </select>
                 </div>
                 <div>
                   <label className="block text-gray-400 text-sm mb-1">الصف</label>
-                  <input type="text" className="modern-input w-full p-2" value={newStudent.grade} onChange={e => setNewStudent({ ...newStudent, grade: e.target.value })} />
+                  <select className="modern-input w-full p-2 disabled:opacity-50 [&>option]:bg-luxury-900 [&>option]:text-white" disabled={!newStudent.stage} value={newStudent.grade} onChange={e => setNewStudent({ ...newStudent, grade: e.target.value })}>
+                    <option value="" disabled>اختر المرحلة أولاً</option>
+                    {newStudent.stage && gradesOptions[newStudent.stage]?.map(g => <option key={g} value={g}>{g}</option>)}
+                  </select>
                 </div>
                 <div>
                   <label className="block text-gray-400 text-sm mb-1">نظام الحضور</label>
