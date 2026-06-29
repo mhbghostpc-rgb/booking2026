@@ -6,6 +6,15 @@ export default function AudioPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
+    // Preload audio after initial render to avoid delaying the page load or blocking LCP
+    const timer = setTimeout(() => {
+      if (!audioRef.current) {
+        const audio = new Audio('/assets/Enta_El_Ostaz.mp3');
+        audio.loop = true;
+        audioRef.current = audio;
+      }
+    }, 2000);
+
     const playAudio = () => {
       if (!audioRef.current) {
         const audio = new Audio('/assets/Enta_El_Ostaz.mp3');
@@ -25,6 +34,7 @@ export default function AudioPlayer() {
     window.addEventListener('playMusic', playAudio);
 
     return () => {
+      clearTimeout(timer);
       window.removeEventListener('playMusic', playAudio);
       if (audioRef.current) {
         audioRef.current.pause();
