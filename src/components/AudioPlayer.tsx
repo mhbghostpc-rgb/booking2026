@@ -6,13 +6,14 @@ export default function AudioPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Initial setup (run only once)
-    const audio = new Audio('/assets/Enta_El_Ostaz.mp3');
-    audio.loop = true;
-    audioRef.current = audio;
-
     const playAudio = () => {
-      if (audioRef.current && audioRef.current.paused) {
+      if (!audioRef.current) {
+        const audio = new Audio('/assets/Enta_El_Ostaz.mp3');
+        audio.loop = true;
+        audioRef.current = audio;
+      }
+      
+      if (audioRef.current.paused) {
         audioRef.current.play().then(() => {
           setIsPlaying(true);
         }).catch(e => {
@@ -33,15 +34,19 @@ export default function AudioPlayer() {
   }, []);
 
   const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        audioRef.current.play().then(() => {
-          setIsPlaying(true);
-        }).catch(e => console.log('Audio play prevented', e));
-      }
+    if (!audioRef.current) {
+      const audio = new Audio('/assets/Enta_El_Ostaz.mp3');
+      audio.loop = true;
+      audioRef.current = audio;
+    }
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(e => console.log('Audio play prevented', e));
     }
   };
 

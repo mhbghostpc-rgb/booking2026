@@ -2,6 +2,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
@@ -152,11 +153,12 @@ export default function SwiperGallery() {
                 className="my-slide"
                 data-swiper-autoplay={isReview ? 6000 : 3000}
               >
-                <img
-                  loading="lazy"
+                <Image
                   src={item.src}
                   alt={item.caption}
-                  className={`w-full h-full ${isReview ? 'review-img' : ''}`}
+                  fill
+                  sizes="(max-width: 768px) 280px, 350px"
+                  className={`${isReview ? 'review-img object-contain bg-[#0a0a0a]' : 'object-cover'}`}
                 />
                 <div className="slide-caption font-tajawal text-sm md:text-base">
                   <i className={`fas ${item.icon} ${item.color} mr-2 ml-1`}></i>

@@ -10,7 +10,7 @@ export default function HeroSection() {
           <div className="premium-3d-frame w-full animate-float-slow cursor-pointer" title="مستر محب موسى">
             <div className="premium-3d-inner p-1 aspect-[3/4] flex flex-col justify-center relative bg-luxury-900 rounded-[1rem] md:rounded-[1.2rem] shadow-[0_0_30px_rgba(212,175,55,0.3)]">
               <div className="absolute inset-0 border-2 border-[#D4AF37] rounded-[0.8rem] md:rounded-[1rem] m-1 z-10 pointer-events-none shadow-[0_0_15px_rgba(212,175,55,0.5),inset_0_0_10px_rgba(212,175,55,0.3)]"></div>
-              <img src="/assets/4.jpeg" width="400" height="533" alt="مستر محب موسى" className="w-full h-full object-cover rounded-[0.7rem] md:rounded-[0.9rem] relative z-0 shadow-inner grayscale-[10%] contrast-125 brightness-110 group-hover:grayscale-0 transition-all duration-500" />
+              <Image src="/assets/4.jpeg" width={400} height={533} alt="مستر محب موسى" priority className="w-full h-full object-cover rounded-[0.7rem] md:rounded-[0.9rem] relative z-0 shadow-inner grayscale-[10%] contrast-125 brightness-110 group-hover:grayscale-0 transition-all duration-500" />
             </div>
           </div>
         </div>

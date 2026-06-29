@@ -15,7 +15,7 @@ export default function EntityPage() {
           <div className="flex flex-col md:flex-row items-center gap-10">
             <div className="w-full md:w-1/3 shrink-0">
               <div className="gold-24k-frame overflow-hidden rounded-2xl">
-                <img src="/assets/4.jpeg" alt="مستر محب موسى" className="w-full h-auto object-cover" />
+                <Image src="/assets/4.jpeg" width={400} height={533} alt="مستر محب موسى" className="w-full h-auto object-cover" priority />
               </div>
             </div>
             
