@@ -134,7 +134,6 @@ export default function SwiperGallery() {
             grabCursor={true}
             centeredSlides={true}
             slidesPerView={'auto'}
-            initialSlide={5}
             autoplay={{
               delay: 3000,
               disableOnInteraction: false,
