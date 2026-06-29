@@ -12,21 +12,18 @@ import 'swiper/css/pagination';
 export default function SwiperGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (!swiperInstance) return;
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          setIsVisible(true);
           window.dispatchEvent(new CustomEvent('playMusic'));
-          swiperInstance.autoplay.start();
-        } else {
-          swiperInstance.autoplay.stop();
+          if (containerRef.current) observer.unobserve(containerRef.current);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.1, rootMargin: '200px' });
 
     if (containerRef.current) {
       observer.observe(containerRef.current);
@@ -37,7 +34,7 @@ export default function SwiperGallery() {
         observer.unobserve(containerRef.current);
       }
     };
-  }, [swiperInstance]);
+  }, []);
 
   const academyImages = Array.from({ length: 13 }, (_, i) => ({
     src: `/assets/academy/${i + 1}.jpeg`,
@@ -131,54 +128,58 @@ export default function SwiperGallery() {
             transform: translateY(0);
           }
         `}</style>
-        <Swiper
-          effect={'coverflow'}
-          grabCursor={true}
-          centeredSlides={true}
-          slidesPerView={'auto'}
-          initialSlide={5}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
-          speed={800}
-          onInit={(swiper) => swiper.autoplay.stop()}
-          onSwiper={setSwiperInstance}
-          coverflowEffect={{
-            rotate: 20,
-            stretch: 0,
-            depth: 200,
-            modifier: 1,
-            slideShadows: true,
-          }}
-          pagination={{ clickable: true }}
-          modules={[EffectCoverflow, Pagination, Autoplay]}
-          className="w-full max-w-5xl mx-auto pb-12 pt-5 gallery-swiper"
-        >
-          {allImages.map((item, index) => {
-            const isReview = item.category === 'reviews';
-            return (
-              <SwiperSlide
-                key={index}
-                className="my-slide"
-                data-swiper-autoplay={isReview ? 6000 : 3000}
-              >
-                <Image
-                  src={item.src}
-                  alt={item.caption}
-                  fill
-                  sizes="(max-width: 768px) 280px, 350px"
-                  quality={50}
-                  className={`${isReview ? 'review-img object-contain bg-[#0a0a0a]' : 'object-cover'}`}
-                />
-                <div className="slide-caption font-tajawal text-sm md:text-base">
-                  <i className={`fas ${item.icon} ${item.color} mr-2 ml-1`}></i>
-                  {item.caption}
-                </div>
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
+        {isVisible ? (
+          <Swiper
+            effect={'coverflow'}
+            grabCursor={true}
+            centeredSlides={true}
+            slidesPerView={'auto'}
+            initialSlide={5}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            speed={800}
+            coverflowEffect={{
+              rotate: 20,
+              stretch: 0,
+              depth: 200,
+              modifier: 1,
+              slideShadows: true,
+            }}
+            pagination={{ clickable: true }}
+            modules={[EffectCoverflow, Pagination, Autoplay]}
+            className="w-full max-w-5xl mx-auto pb-12 pt-5 gallery-swiper"
+          >
+            {allImages.map((item, index) => {
+              const isReview = item.category === 'reviews';
+              return (
+                <SwiperSlide
+                  key={index}
+                  className="my-slide"
+                  data-swiper-autoplay={isReview ? 6000 : 3000}
+                >
+                  <Image
+                    src={item.src}
+                    alt={item.caption}
+                    fill
+                    sizes="(max-width: 768px) 280px, 350px"
+                    quality={50}
+                    className={`${isReview ? 'review-img object-contain bg-[#0a0a0a]' : 'object-cover'}`}
+                  />
+                  <div className="slide-caption font-tajawal text-sm md:text-base">
+                    <i className={`fas ${item.icon} ${item.color} mr-2 ml-1`}></i>
+                    {item.caption}
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        ) : (
+          <div className="w-full max-w-5xl mx-auto h-[450px] flex items-center justify-center">
+            <div className="w-10 h-10 border-4 border-gold-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        )}
       </div>
 
     </section>
