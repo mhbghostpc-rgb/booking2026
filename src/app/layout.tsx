@@ -31,21 +31,7 @@ export default function RootLayout({
     <html lang="ar" dir="rtl">
       <head>
         <JsonLd />
-        <link
-          rel="preload"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-          as="style"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-          media="print"
-          // @ts-ignore
-          onLoad="this.media='all'"
-        />
-        <noscript>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-        </noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
       </head>
       <body className={`${tajawal.variable} font-tajawal antialiased bg-obsidian text-white overflow-x-hidden`}>
         <Navbar />
