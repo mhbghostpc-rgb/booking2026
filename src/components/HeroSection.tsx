@@ -8,9 +8,8 @@ export default function HeroSection() {
         <header className="pt-6 md:pt-10 pb-8 flex flex-row items-center justify-center gap-4 md:gap-8 relative z-20">
         <div className="w-20 sm:w-24 md:w-32 shrink-0 group">
           <div className="premium-3d-frame w-full animate-float-slow cursor-pointer" title="مستر محب موسى">
-            <div className="premium-3d-inner p-1 aspect-[3/4] flex flex-col justify-center relative bg-luxury-900 rounded-[1rem] md:rounded-[1.2rem] shadow-[0_0_30px_rgba(212,175,55,0.3)]">
-              <div className="absolute inset-0 border-2 border-[#D4AF37] rounded-[0.8rem] md:rounded-[1rem] m-1 z-10 pointer-events-none shadow-[0_0_15px_rgba(212,175,55,0.5),inset_0_0_10px_rgba(212,175,55,0.3)]"></div>
-              <Image src="/assets/4.jpeg" width={400} height={533} alt="مستر محب موسى" priority className="w-full h-full object-cover rounded-[0.7rem] md:rounded-[0.9rem] relative z-0 shadow-inner grayscale-[10%] contrast-125 brightness-110 group-hover:grayscale-0 transition-all duration-500" />
+            <div className="premium-3d-inner overflow-hidden aspect-[3/4] flex flex-col justify-center relative bg-luxury-900 rounded-[1rem] md:rounded-[1.2rem] border-2 border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+                 <Image src="/assets/4.jpeg" width={400} height={533} alt="مستر محب موسى" priority className="w-full h-auto object-contain relative z-0 grayscale-[10%] contrast-125 brightness-110 group-hover:grayscale-0 transition-all duration-500 translate-y-3" />
             </div>
           </div>
         </div>
