@@ -129,7 +129,7 @@ export default function SwiperGallery() {
           }
         `}</style>
         {isVisible ? (
-          <Swiper
+            <Swiper
             effect={'coverflow'}
             grabCursor={true}
             centeredSlides={true}
@@ -149,6 +149,8 @@ export default function SwiperGallery() {
             pagination={{ clickable: true }}
             modules={[EffectCoverflow, Pagination, Autoplay]}
             className="w-full max-w-5xl mx-auto pb-12 pt-5 gallery-swiper"
+            onSlideChange={() => window.dispatchEvent(new CustomEvent('playMusic'))}
+            onTouchStart={() => window.dispatchEvent(new CustomEvent('playMusic'))}
           >
             {allImages.map((item, index) => {
               const isReview = item.category === 'reviews';
