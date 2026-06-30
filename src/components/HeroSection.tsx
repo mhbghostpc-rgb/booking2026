@@ -31,8 +31,8 @@ export default function HeroSection() {
       <div className="w-[95%] 2xl:w-[90%] max-w-none mx-auto px-4 mt-8">
         <ScrollReveal delay={0.1}>
           <div className="bg-gradient-to-b from-[#0a0f1c] to-[#04060a] border-t border-blue-900/40 border-x border-[#0a0f1c] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.9),inset_0_1px_1px_rgba(59,130,246,0.2)] p-6 md:p-12 mb-10 overflow-hidden relative rounded-[2rem]">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
+          <div className="hidden md:block absolute top-0 right-0 w-64 h-64 bg-gold-500/5 rounded-full blur-3xl transform-gpu"></div>
+          <div className="hidden md:block absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl transform-gpu"></div>
 
           <div className="flex flex-col items-center text-center relative z-10 border-b border-white/5 pb-8 mb-8 max-w-5xl mx-auto">
             <h2 className="font-amiri text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-white drop-shadow-xl">

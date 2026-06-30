@@ -13,6 +13,7 @@ export default function SwiperGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [isVisible, setIsVisible] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState('reviews');
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -60,12 +61,12 @@ export default function SwiperGallery() {
     category: 'reviews'
   }));
 
-  const allImages = [...momentsImages, ...reviewsImages, ...academyImages];
+  const allImages = [...reviewsImages, ...momentsImages, ...academyImages];
 
   return (
     <section className="py-20 relative overflow-hidden" id="gallery" ref={containerRef}>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="hidden md:block absolute top-0 right-0 w-96 h-96 bg-gold-500/10 rounded-full blur-[100px] pointer-events-none transform-gpu"></div>
+      <div className="hidden md:block absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none transform-gpu"></div>
 
       <div className="container mx-auto px-4 relative z-10 text-center">
         <h2 className="text-4xl md:text-5xl font-bold text-gradient-gold mb-4 flex items-center justify-center gap-4">
@@ -81,13 +82,14 @@ export default function SwiperGallery() {
             overflow: hidden !important;
             border: 2px solid rgba(212, 175, 55, 0.3) !important;
             position: relative !important;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8) !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
             background-color: #0a0a0a !important;
           }
           @media (min-width: 768px) {
             .gallery-swiper .swiper-slide {
               width: 350px !important;
               height: 450px !important;
+              box-shadow: 0 15px 35px rgba(0,0,0,0.8) !important;
             }
           }
           .gallery-swiper .swiper-slide img {
@@ -129,6 +131,7 @@ export default function SwiperGallery() {
           }
         `}</style>
         {isVisible ? (
+          <>
             <Swiper
             effect={'coverflow'}
             grabCursor={true}
@@ -138,18 +141,21 @@ export default function SwiperGallery() {
               delay: 3000,
               disableOnInteraction: false,
             }}
-            speed={800}
+            speed={500}
             coverflowEffect={{
-              rotate: 20,
+              rotate: 15,
               stretch: 0,
-              depth: 200,
+              depth: 150,
               modifier: 1,
-              slideShadows: true,
+              slideShadows: false,
             }}
             pagination={{ clickable: true }}
             modules={[EffectCoverflow, Pagination, Autoplay]}
             className="w-full max-w-5xl mx-auto pb-12 pt-5 gallery-swiper"
-            onSlideChange={() => window.dispatchEvent(new CustomEvent('playMusic'))}
+            onSlideChange={(swiper) => {
+              window.dispatchEvent(new CustomEvent('playMusic'));
+              setCurrentCategory(allImages[swiper.activeIndex]?.category || 'reviews');
+            }}
             onTouchStart={() => window.dispatchEvent(new CustomEvent('playMusic'))}
           >
             {allImages.map((item, index) => {
@@ -176,6 +182,22 @@ export default function SwiperGallery() {
               );
             })}
           </Swiper>
+          
+          <div className="mt-8 h-20 flex items-center justify-center transition-all duration-500">
+            {currentCategory === 'reviews' && (
+              <div className="animate-bounce flex flex-col items-center">
+                <span className="text-gold-500 font-bold text-lg mb-2 tracking-wider">انتظر في التالي.. لحظات لا تنسى</span>
+                <i className="fas fa-arrow-left text-4xl text-gold-500 drop-shadow-[0_0_15px_rgba(212,175,55,1)]"></i>
+              </div>
+            )}
+            {currentCategory === 'moments' && (
+              <div className="animate-bounce flex flex-col items-center">
+                <span className="text-gold-500 font-bold text-lg mb-2 tracking-wider">المزيد من التشويق.. صور الأكاديمية</span>
+                <i className="fas fa-arrow-left text-4xl text-gold-500 drop-shadow-[0_0_15px_rgba(212,175,55,1)]"></i>
+              </div>
+            )}
+          </div>
+          </>
         ) : (
           <div className="w-full max-w-5xl mx-auto h-[450px] flex items-center justify-center">
             <div className="w-10 h-10 border-4 border-gold-500 border-t-transparent rounded-full animate-spin"></div>
