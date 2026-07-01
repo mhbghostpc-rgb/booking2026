@@ -27,11 +27,20 @@ export const metadata: Metadata = {
     siteName: "أكاديمية مستر محب موسى",
     locale: "ar_EG",
     type: "website",
+    images: [
+      {
+        url: "https://mrmohebmousabooking2026.vercel.app/assets/4.jpeg",
+        width: 800,
+        height: 600,
+        alt: "مستر محب موسى",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "أكاديمية مستر محب موسى | لتعليم اللغة الإنجليزية",
     description: "أكاديمية مستر محب موسى هي منصة تعليمية متخصصة في تعليم اللغة الإنجليزية للطلاب.",
+    images: ["https://mrmohebmousabooking2026.vercel.app/assets/4.jpeg"],
   },
   robots: {
     index: true,
@@ -45,7 +54,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/assets/4.jpeg',
+    apple: '/assets/4.jpeg',
   },
 };
 
